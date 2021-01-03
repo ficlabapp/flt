@@ -1,0 +1,72 @@
+0003 0 text/vnd
+0000 .ficlab.flt
+0003 1 1
+0003 2 1
+0003 4 Manually typed in vim
+# Example FLT document
+0042 1
+0002 5 top
+0001 This is a \\\n broken line of 
+0011 vaguely
+0101 5
+0001  
+00A1 non
+0001 -
+0401 interesting text
+0003 3 subject Gilberd
+0003 3 subject Steve
+0201 (really)
+0001  
+0041 with an underline
+0001 .
+0032 2
+0001 This is a new paragraph.
+0062 1
+0001 This is a new, centred section. This paragraph inherits its alignment from
+0000  the section within which it resides. It also contains a 
+0002 4 http://example.com/
+0001 link to 
+0011 example.com
+0005 .
+0012 2
+0001 This paragraph defines its own alignment.
+0002 1
+0001 This section has no separator. But it has a table:
+0002 8 4
+0122 9
+0001 Species
+0122 9
+0001 Colour
+0122 9
+0001 Food
+0122 9
+0001 When
+0022 9
+0001 Fish
+0022 9
+0001 Blue
+0022 9
+0001 Red
+0022 9
+0001 Sundays
+0022 9
+0022 9
+0001 Invisible
+0022 9
+0001 Unknown
+0022 9
+0001 Unknown
+0002 2
+0001 This is some more text after the table.
+0042 1
+0001 This one does have a separator.
+0002 3 All the way back up to the beginning of the document.
+0002 4 #top
+0001 Go to top
+0005 .
+0002 6 image/jpeg iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4/
+0000 /8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+0002 3 This is an awesome image.
+0002 7 https://media.gettyimages.com/photos/electric-power-lines-at-sunset-picture-id690678972?b=1&k=6&m=690678972&s=170x170&h=-aphmsJDHgypAGwtPzrOYd5c3TkAHPF5ZX22Em6eAt0=
+0002 3 This is an embedded red dot.
+0002 7
