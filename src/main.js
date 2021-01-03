@@ -1,6 +1,6 @@
 "use strict";
 
-import { Bitfield } from "bitfield";
+import { Bitfield } from "@ficlabapp/bitfield";
 import { Constants } from "./constants.js";
 import { Features } from "./features.js";
 import { Line, TypeLine, MetaLine, DCLine } from "./line.js";

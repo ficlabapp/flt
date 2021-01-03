@@ -1,6 +1,6 @@
 {
     "name": "@ficlabapp/flt",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "JS implementation of text/vnd.ficlab.flt",
     "repository": "github:ficlabapp/flt",
     "license": "ISC",
@@ -16,6 +16,6 @@
         "prettier": "^2.1.2"
     },
     "dependencies": {
-        "bitfield": "ficlabapp/bitfield"
+        "@ficlabapp/bitfield": "^1.0.8"
     }
 }

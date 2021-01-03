@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@ficlabapp/bitfield@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@ficlabapp/bitfield/-/bitfield-1.0.8.tgz#6196af2e026aec1e96fe31ba69257c15c627ce2d"
+  integrity sha512-FeuS0a/BlMx3HGg2j4Ex/D44DD6jB9i7jQcQLk3Z3O4HhyQPj3yFP4Jbm70m5OxPhEbcrZvDjfkAWvExfF6BdQ==
+  dependencies:
+    ajv "^7.0.2"
+
 ajv@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-7.0.3.tgz#13ae747eff125cafb230ac504b2406cf371eece2"
@@ -11,12 +18,6 @@ ajv@^7.0.2:
     json-schema-traverse "^1.0.0"
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
-
-bitfield@ficlabapp/bitfield:
-  version "1.0.8"
-  resolved "https://codeload.github.com/ficlabapp/bitfield/tar.gz/ca40438f19563366517abd4c24ecc3469a18016c"
-  dependencies:
-    ajv "^7.0.2"
 
 fast-deep-equal@^3.1.1:
   version "3.1.3"
