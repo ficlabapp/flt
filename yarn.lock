@@ -3,9 +3,9 @@
 
 
 "@ficlabapp/bitfield@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@ficlabapp/bitfield/-/bitfield-1.0.8.tgz#6196af2e026aec1e96fe31ba69257c15c627ce2d"
-  integrity sha512-FeuS0a/BlMx3HGg2j4Ex/D44DD6jB9i7jQcQLk3Z3O4HhyQPj3yFP4Jbm70m5OxPhEbcrZvDjfkAWvExfF6BdQ==
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@ficlabapp/bitfield/-/bitfield-1.0.10.tgz#39127c707035de3fe6010dcb8670ed5d152a5733"
+  integrity sha512-Mt+XumCUHgGqEfqvXMk/Z1eii6PLdp00PdYeoqfM6lkKBg5IWkushYEVnx2llUV6kjlu4OGd27V9e8m2PvX3Lg==
   dependencies:
     ajv "^7.0.2"
 
