@@ -4,6 +4,7 @@ import { Bitfield } from "@ficlabapp/bitfield";
 import { Constants } from "./constants.js";
 import { Features } from "./features.js";
 import { Line, TypeLine, MetaLine, DCLine } from "./line.js";
+import { Plugin } from "./plugin.js";
 import * as Error from "./error.js";
 
 export * from "./line.js"; // re-export all line types for end users
@@ -221,5 +222,25 @@ export class Document {
         // naive implementation that requires a full document scan on every read
         // TODO add some sort of indexing here
         return this.lines.filter((l) => l instanceof DCLine && l.term === term).map((l) => l.value);
+    }
+
+    /**
+     * Use a plugin
+     *
+     * @since 1.1.0
+     *
+     * @param class pluginClass Plugin class to attach
+     * @param array setup       Args to pass to plugin _setup() method
+     * @return void
+     */
+    use(pluginClass, ...setup) {
+        for (let method of pluginClass._register()) {
+            Object.defineProperty(this, method, {
+                enumerable: true,
+                value: (...args) => pluginClass[method].apply(this, args)
+            });
+            // run setup hook
+            if (pluginClass._setup) pluginClass._setup.apply(this, setup);
+        }
     }
 }
