@@ -28,6 +28,7 @@ export class Document {
     constructor(source = null) {
         // main document properties
         Object.defineProperties(this, {
+            _plugins: { enumerable: false, value: [] },
             version: { enumerable: true, value: Constants.DEFAULT_VERSION, writable: true },
             doctype: { enumerable: true, value: Constants.MEDIA_TYPE },
             features: { enumerable: true, value: new Features(), writable: false },
@@ -236,16 +237,22 @@ export class Document {
      * @return void
      */
     use(pluginClass, ...setup) {
+        // must be a valid plugin and not already registered
         if (!(pluginClass.prototype instanceof Plugin))
             throw new Error.PluginError(
                 `'${pluginClass.prototype.constructor.name}' is not a valid plugin`
             );
+        if (this._plugins.includes(pluginClass)) return;
+        this._plugins.push(pluginClass);
+
+        // register methods
         for (let method of pluginClass._register()) {
             Object.defineProperty(this, method, {
                 enumerable: true,
                 value: (...args) => pluginClass[method].apply(this, args),
             });
         }
+
         // run setup hook
         if (pluginClass._setup) pluginClass._setup.apply(this, setup);
     }
