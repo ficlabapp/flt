@@ -229,8 +229,8 @@ export class Document {
      *
      * @since 1.1.0
      *
-     * @param class pluginClass Plugin class to attach
-     * @param array setup       Args to pass to plugin _setup() method
+     * @param Plugin pluginClass Plugin class to attach
+     * @param array  setup       Args to pass to plugin _setup() method
      * @return void
      */
     use(pluginClass, ...setup) {
