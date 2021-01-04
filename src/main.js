@@ -245,8 +245,8 @@ export class Document {
                 enumerable: true,
                 value: (...args) => pluginClass[method].apply(this, args),
             });
-            // run setup hook
-            if (pluginClass._setup) pluginClass._setup.apply(this, setup);
         }
+        // run setup hook
+        if (pluginClass._setup) pluginClass._setup.apply(this, setup);
     }
 }
