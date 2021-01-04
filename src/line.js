@@ -378,7 +378,7 @@ export class DCLine extends MetaLine {
         if (!matches)
             throw new Error.SyntaxError(lineNo, "Malformed dublin core metadata definition");
         if (!Constants.DC_TERMS.includes(matches[1]))
-            throw new DCError(`Invalid dublin core term: ${matches[1]}`);
+            throw new Error.DCError(`Invalid dublin core term: ${matches[1]}`);
         return new DCLine(lineNo, bitfield, matches[1], matches[2].trim());
     }
 

@@ -180,7 +180,7 @@ export class Document {
      */
     addDC(term, value = undefined) {
         if (!this.features.DCMETA)
-            throw new FLTError("Dublin core metadata is not enabled for this document");
+            throw new Error.FLTError("Dublin core metadata is not enabled for this document");
         if (!Constants.DC_TERMS.includes(term))
             throw new Error.DCError(`Invalid dublin core term: ${term}`);
         if (value !== undefined) {
@@ -214,7 +214,7 @@ export class Document {
      */
     getDC(term) {
         if (!this.features.DCMETA)
-            throw new FLTError("Dublin core metadata is not enabled for this document");
+            throw new Error.FLTError("Dublin core metadata is not enabled for this document");
         if (!Constants.DC_TERMS.includes(term))
             throw new Error.DCError(`Invalid dublin core term: ${term}`);
 
