@@ -329,9 +329,11 @@ export class MetaLine extends Line {
                     if (Number.isInteger(this.content)) output += ` ${this.content.toString(16)}`;
                     else output += ` ${this.content}`;
                     break;
+                case "bigint":
+                    output += ` ${this.content.toString(16)}`;
+                    break;
                 case "object":
-                    if (this.content instanceof BigInt) output += ` ${this.content.toString(16)}`;
-                    else throw new Error.NotImplementedError("Unknown metadata content object");
+                    throw new Error.NotImplementedError("Unknown metadata content object");
                     break;
                 case "boolean":
                     output += ` ${this.content.toString()}`;
