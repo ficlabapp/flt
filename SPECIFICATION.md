@@ -154,7 +154,7 @@ will also implicitly open a new paragraph and set the destination to `BODY`.
 
 ### PARAGRAPH
 
-Begin a new paragraph. Implicitly sets the destination to `BODY`.
+Begin a new paragraph.
 
 #### Flags
 | Number | Type         | Description                             |
