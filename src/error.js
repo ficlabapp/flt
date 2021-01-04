@@ -2,6 +2,8 @@
 
 export class FLTError extends Error {}
 
+export class PluginError extends FLTError {}
+
 export class InternalSyntaxError extends FLTError {}
 
 export class NotImplementedError extends FLTError {}

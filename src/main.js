@@ -234,10 +234,14 @@ export class Document {
      * @return void
      */
     use(pluginClass, ...setup) {
+        if (!(pluginClass.prototype instanceof Plugin))
+            throw new Error.PluginError(
+                `'${pluginClass.prototype.constructor.name}' is not a valid plugin`
+            );
         for (let method of pluginClass._register()) {
             Object.defineProperty(this, method, {
                 enumerable: true,
-                value: (...args) => pluginClass[method].apply(this, args)
+                value: (...args) => pluginClass[method].apply(this, args),
             });
             // run setup hook
             if (pluginClass._setup) pluginClass._setup.apply(this, setup);
