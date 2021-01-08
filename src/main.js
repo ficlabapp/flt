@@ -8,9 +8,7 @@ import { Plugin } from "./plugin.js";
 import * as Error from "./error.js";
 
 export * from "./line.js"; // re-export all line types for end users
-export * as Error from "./error.js";
-export { Constants } from "./constants.js";
-export { Plugin } from "./plugin.js";
+export { Error, Constants, Plugin };
 
 /**
  * Main FLT document class
