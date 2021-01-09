@@ -7,7 +7,26 @@
   resolved "https://registry.yarnpkg.com/@ficlabapp/bitfield/-/bitfield-1.0.11.tgz#92f003783580e607f56936602b85a6c5694e8cba"
   integrity sha512-gs6pGVvRAHkhQnzV8gDNGXH3+irYcTQ4ItF/pX18gZpodqi+i2CW0ZQzar0Q+YgzpyRlEZji8GCsLd+iyXjn6w==
 
+match-words@^0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/match-words/-/match-words-0.1.1.tgz#dcd3119e74a6a67be4304ca5cf926580e8e1a7af"
+  integrity sha1-3NMRnnSmpnvkMEylz5JlgOjhp68=
+  dependencies:
+    word-regex "^0.1.0"
+
 prettier@^2.1.2:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
   integrity sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
+
+word-regex@^0.1.0:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/word-regex/-/word-regex-0.1.2.tgz#a3bc7f2d222ce4a93c246c3ef69458f61f511639"
+  integrity sha1-o7x/LSIs5Kk8JGw+9pRY9h9RFjk=
+
+wordcount@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/wordcount/-/wordcount-1.1.1.tgz#e72da7833904d870a154c9ef47ed5f3e7997cf57"
+  integrity sha1-5y2ngzkE2HChVMnvR+1fPnmXz1c=
+  dependencies:
+    match-words "^0.1.0"

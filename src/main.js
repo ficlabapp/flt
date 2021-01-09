@@ -1,9 +1,10 @@
 "use strict";
 
 import { Bitfield } from "@ficlabapp/bitfield";
+import { default as wordcount } from "wordcount";
 import { Constants } from "./constants.js";
 import { Features } from "./features.js";
-import { Line, TypeLine, MetaLine, DCLine } from "./line.js";
+import { Line, TextLine, TypeLine, MetaLine, DCLine } from "./line.js";
 import { Plugin } from "./plugin.js";
 import * as Error from "./error.js";
 
@@ -253,5 +254,21 @@ export class Document {
 
         // run setup hook
         if (pluginClass._setup) pluginClass._setup.apply(this, setup);
+    }
+
+    /**
+     * Count the number of words in the document
+     *
+     * @since 1.1.10
+     *
+     * @return number
+     */
+    wordcount() {
+        let words = 0;
+        this.lines
+            .filter((l) => l instanceof TextLine)
+            .forEach((l) => (words += wordcount(l.text)));
+
+        return words;
     }
 }
