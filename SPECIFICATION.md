@@ -212,10 +212,16 @@ Contains no content. The destination is set using bits 5-8 of the line flags
 | 0x0000 | BODY        | Main document body   |
 | 0x0010 | NOTE        | Aside or footer note |
 | 0x0020 | CELL        | Table cell           |
+| 0x0030 | HEAD        | Heading              |
 
 If the destination is a table cell, a new cell is created every time this line
-is present. If the destination is a footnote, a new footnote is created every
-time this line is present.
+is present.
+
+If the destination is a footnote, a new footnote is created every time this
+line is present.
+
+If the destination is a heading, a new section is created every time this line
+is present, and the destination is then set to `D_BODY`.
 
 #### Flags
 

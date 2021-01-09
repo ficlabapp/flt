@@ -89,6 +89,7 @@ const values = {
     D_BODY: 0n, // document body
     D_NOTE: 1n, // aside / note
     D_CELL: 2n, // table cell
+    D_HEAD: 3n, // heading
 
     // destination flags
     DESTINATION_FLAGS: ["D_HEADER"],
