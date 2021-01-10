@@ -88,7 +88,7 @@ export class Document {
                 return {
                     no: l.no,
                     bitfield: new Bitfield({}, `0x${matches[1]}`),
-                    content: matches[2],
+                    content: matches[2] || "",
                 };
             })
             .reduce((c, l) => {
