@@ -5,6 +5,7 @@ import { default as wordcount } from "wordcount";
 import { Constants } from "./constants.js";
 import { Features } from "./features.js";
 import { Line, TextLine, TypeLine, MetaLine, DCLine } from "./line.js";
+import { Map } from "./map.js";
 import { Plugin } from "./plugin.js";
 import * as Error from "./error.js";
 
@@ -37,6 +38,7 @@ export class Document {
                 value: source ? Document.parse(source) : [],
                 writable: true,
             },
+            map: { enumerable: true, get: () => new Map(this) },
         });
 
         // apply metadata provided from the document & remove corresponding lines
