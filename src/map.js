@@ -34,8 +34,8 @@ export class Map {
         for (let line of document.lines) {
             if (line instanceof TextLine) {
                 // add text & line, and update container lengths
-                text += line.text;
                 lines.push({ offset: text.length, length: line.text.length, text: line });
+                text += line.text;
                 sections.slice(-1)[0].length += line.text.length;
                 if (inParagraph) paragraphs.slice(-1)[0].length += line.text.length;
                 if (inNote) notes.slice(-1)[0].length += line.text.length;
