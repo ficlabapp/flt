@@ -106,7 +106,10 @@ export class TextLine extends Line {
         };
         for (let i in flags) this.defineProperty(i, Helpers.ffz(~flags[i]));
 
-        Object.defineProperty(this, "text", { enumerable: true, value: text });
+        Object.defineProperties(this, {
+            text: { enumerable: true, value: text, writable: true },
+            length: { enumerable: true, get: () => this.text.length },
+        });
     }
 
     /**
