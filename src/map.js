@@ -18,73 +18,18 @@ export class Map {
      * @param Document document Document to create a map for
      */
     constructor(document) {
-        let text = "",
-            lines = [{ offset: 0, length: 0 }],
-            sections = [{ offset: 0, length: 0 }],
-            paragraphs = [{ offset: 0, length: 0 }],
-            notes = [{ offset: 0, length: 0 }],
-            cells = [{ offset: 0, length: 0 }],
-            headings = [{ offset: 0, length: 0 }],
-            dest = Constants.D_BODY,
-            inParagraph = true,
-            inNote = false,
-            inHeading = false,
-            inCell = false;
-
-        for (let line of document.lines) {
-            if (line instanceof TextLine) {
-                // add text & line, and update container lengths
-                lines.push({ offset: text.length, length: line.text.length, text: line });
-                text += line.text;
-                sections.slice(-1)[0].length += line.text.length;
-                if (inParagraph) paragraphs.slice(-1)[0].length += line.text.length;
-                if (inNote) notes.slice(-1)[0].length += line.text.length;
-                if (inCell) cells.slice(-1)[0].length += line.text.length;
-                if (inHeading) headings.slice(-1)[0].length += line.text.length;
-            } else if (line instanceof TypeLine) {
-                // update container targets
-                switch (line.lineType) {
-                    case Constants.T_SECTION:
-                        sections.push({ offset: text.length, length: 0 });
-                    // deliberate fallthrough to paragraph
-                    case Constants.T_PARAGRAPH:
-                        paragraphs.push({ offset: text.length, length: 0 });
-                        inParagraph = true;
-                        break;
-                    case Constants.T_DESTINATION:
-                        inParagraph = inNote = inHeading = inCell = false;
-                        switch (line.destination) {
-                            case Constants.D_BODY:
-                                paragraphs.push({ offset: text.length, length: 0 });
-                                inParagraph = true;
-                                break;
-                            case Constants.D_NOTE:
-                                notes.push({ offset: text.length, length: 0 });
-                                inNote = true;
-                                break;
-                            case Constants.D_CELL:
-                                cells.push({ offset: text.length, length: 0 });
-                                inCell = true;
-                                break;
-                            case Constants.D_HEAD:
-                                headings.push({ offset: text.length, length: 0 });
-                                inHeading = true;
-                                break;
-                        }
-                        break;
-                }
-            }
-        }
-
-        // attach result to instance
         Object.defineProperties(this, {
-            text: { enumerable: true, value: text },
-            lines: { enumerable: true, value: lines.filter((v) => v.length) },
-            sections: { enumerable: true, value: sections.filter((v) => v.length) },
-            paragraphs: { enumerable: true, value: paragraphs.filter((v) => v.length) },
-            notes: { enumerable: true, value: notes.filter((v) => v.length) },
-            cells: { enumerable: true, value: cells.filter((v) => v.length) },
-            headings: { enumerable: true, value: headings.filter((v) => v.length) },
+            document: { enumerable: true, value: document },
+            paragraphs: {
+                enumerable: true,
+                get: () => {
+                    return document.lines
+                        .filter(
+                            (l) => l instanceof TypeLine && l.lineType === Constants.T_PARAGRAPH
+                        )
+                        .map((l) => new MapPoint(this, l, "paragraph"));
+                },
+            },
         });
     }
 
@@ -97,31 +42,62 @@ export class Map {
      * @return object
      */
     at(offset = 0) {
-        let text = null;
-        function find(offset, arr) {
-            if (!arr || !arr.length) return [0, 0];
-            let l = 0,
-                r = arr.length - 1;
-            while (l <= r) {
-                let i = Math.ceil((l + r) / 2);
-                if (arr[i].offset > offset) r = Math.max(0, i - 1);
-                else if (arr[i].offset <= offset) l = i;
-                if (l === r) {
-                    if (offset < arr[l].offset) return [0, 0];
-                    if (offset >= arr[l].offset + arr[l].length) return [0, 0];
-                    text = arr[l].text;
-                    return [arr[l].offset, arr[l].length];
+        let pos = 0,
+            lineOffset = null,
+            destination = null,
+            out = {
+                line: null,
+                section: null,
+                paragraph: null,
+                note: null,
+                cell: null,
+                heading: null,
+            };
+
+        // find the text line at this offset
+        for (let i = 0; i < this.document.lines.length; i++) {
+            let line = this.document.lines[i];
+            if (line instanceof TextLine) {
+                if (pos <= offset && pos + line.length > offset) {
+                    lineOffset = i;
+                    out.line = new MapPoint(this, line, "line");
+                    break;
                 }
+                pos += line.length;
             }
         }
 
-        let out = { offset };
-        for (let type of ["section", "paragraph", "note", "cell", "heading"]) {
-            let result = find(offset, this[`${type}s`]);
-            out[type] = result[1] ? new MapPoint(this, ...result, type) : null;
+        // find the parent containers of this line
+        reverse: for (let i = lineOffset; i >= 0; i--) {
+            let line = this.document.lines[i];
+            if (!(line instanceof TypeLine)) continue;
+            switch (line.lineType) {
+                case Constants.T_SECTION:
+                    out.section = new MapPoint(this, line, "section");
+                    break reverse;
+                case Constants.T_PARAGRAPH:
+                    if (!out.paragraph && (destination == null || destination === Constants.D_BODY))
+                        out.paragraph = new MapPoint(this, line, "paragraph");
+                    break;
+                case Constants.T_DESTINATION: {
+                    if (destination === null) {
+                        destination = line.destination;
+                        switch (destination) {
+                            case Constants.D_NOTE:
+                                out.note = new MapPoint(this, line, "note");
+                                break;
+                            case Constants.D_CELL:
+                                out.cell = new MapPoint(this, line, "cell");
+                                break;
+                            case Constants.D_HEAD:
+                                out.heading = new MapPoint(this, line, "heading");
+                                break;
+                        }
+                    }
+                    break;
+                }
+            }
         }
-        out.line = new MapPoint(this, ...find(offset, this.lines), "line");
-        out.text = text;
 
         return out;
     }
