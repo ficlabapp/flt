@@ -42,17 +42,76 @@ export class MapPoint {
     }
 
     /**
+     * Search / replace text
+     *
+     * @since 1.0.0
+     *
+     * @param RegEx  search
+     * @param string replace
+     * @return MapPoint Returns this instance, for chaining
+     */
+    replace(search, replace) {
+        let matches = null,
+            skew = 0;
+        if (search.global) matches = this.text.matchAll(search);
+        else matches = [this.text.match(search)];
+
+        for (let match of matches) {
+            let matchLength = match[0].length,
+                matchLine = this.at(match.index + skew),
+                matchReplace = replace,
+                onset = match.index + skew - matchLine.offset,
+                remainder = matchLine.line.length - matchLength - onset;
+
+            // build replacement string when capturing groups are used
+            if (match.length > 1) {
+                for (let i = 1; i < match.length; i++) {
+                    let r = new RegExp(`\\$${i}`, "gu");
+                    matchReplace = matchReplace.replace(r, match[i]);
+                }
+            }
+
+            // update skew so we can use the original match indexes for future matches
+            skew += matchReplace.length - matchLength;
+
+            // fast path when only one TextLine is involved
+            if (remainder >= 0) {
+                matchLine.line.text = matchLine.line.text.replace(search, replace);
+                continue;
+            }
+
+            // multi-line replace (replacement goes in first line)
+            matchLine.line.text = matchLine.line.text.slice(0, onset) + matchReplace;
+            for (
+                let next = this.at(matchLine.offset + matchLine.line.length);
+                remainder < 0;
+                next = this.at(next.offset + next.line.length)
+            ) {
+                if (next.line.length <= -remainder) {
+                    remainder += next.line.text;
+                    next.line.text = "";
+                } else {
+                    next.line.text = next.line.text.slice(-remainder);
+                    break;
+                }
+            }
+        }
+
+        return this;
+    }
+
+    /**
      * Get the text line at the specified offset
      *
      * @since 1.0.0
      *
      * @param int offset Offset into text
-     * @return TextLine
+     * @return { offset: int, line: TextLine }
      */
     at(offset = 0) {
         let pos = 0;
         for (let line of this.getTextLines()) {
-            if (offset <= pos + line.length) return line;
+            if (offset < pos + line.length) return { offset: pos, line };
             pos += line.length;
         }
         return null;
