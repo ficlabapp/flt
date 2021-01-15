@@ -56,6 +56,8 @@ export class MapPoint {
         if (search.global) matches = this.text.matchAll(search);
         else matches = [this.text.match(search)];
 
+        if (!matches.length || !matches[0]) return this;
+
         for (let match of matches) {
             let matchLength = match[0].length,
                 matchLine = this.at(match.index + skew),
