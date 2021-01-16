@@ -83,6 +83,10 @@ export class MapPoint {
             }
 
             // multi-line replace (replacement goes in first line)
+            // NOTE THAT CAPTURING GROUPS ARE NOT KEPT WITHIN THEIR LINES, so if
+            // using captured text as part of the replacement, bear in mind that it
+            // will end up transposed into the first line. Things like quote replacement
+            // etc. must be done some other way if needing to e.g. preserve formatting.
             matchLine.line.text = matchLine.line.text.slice(0, onset) + matchReplace;
             for (
                 let next = this.at(matchLine.offset + matchLine.line.length);
