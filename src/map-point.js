@@ -90,7 +90,7 @@ export class MapPoint {
             matchLine.line.text = matchLine.line.text.slice(0, onset) + matchReplace;
             for (
                 let next = this.at(matchLine.offset + matchLine.line.length);
-                remainder < 0;
+                remainder < 0 && next;
                 next = this.at(next.offset + next.line.length)
             ) {
                 if (next.line.length <= -remainder) {
