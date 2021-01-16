@@ -90,7 +90,7 @@ export class MapPoint {
                 next = this.at(next.offset + next.line.length)
             ) {
                 if (next.line.length <= -remainder) {
-                    remainder += next.line.text;
+                    remainder += next.line.text.length;
                     next.line.text = "";
                 } else {
                     next.line.text = next.line.text.slice(-remainder);
