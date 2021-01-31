@@ -82,7 +82,7 @@ export class Document {
             .map((l, i) => ({ no: i + 1, data: l }))
             .filter((l) => !l.data.match(/^\s*(?:(?:#|\/\/).*)?$/u))
             .map((l) => {
-                let matches = l.data.match(/^\s*([0-9a-f]+)(?: (.*))?$/iu);
+                let matches = l.data.match(/^\s*([0-9a-f]+)(?: (.*))?$/isu);
                 if (!matches) {
                     console.log(l.data);
                     throw new Error.SyntaxError(l.no, "Malformed line structure");
