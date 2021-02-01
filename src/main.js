@@ -94,7 +94,7 @@ export class Document {
                 };
             })
             .reduce((c, l) => {
-                if (!c.length || l.bitfield > 0n) c.push(l);
+                if (!c.length || l.bitfield.value() > 0n) c.push(l);
                 else c[c.length - 1].content += l.content;
 
                 return c;
