@@ -238,11 +238,6 @@ export class Document {
      * @return void
      */
     use(pluginClass, ...setup) {
-        // must be a valid plugin and not already registered
-        if (!(pluginClass.prototype instanceof Plugin))
-            throw new Error.PluginError(
-                `'${pluginClass.prototype.constructor.name}' is not a valid plugin`
-            );
         if (this._plugins.includes(pluginClass)) return;
         this._plugins.push(pluginClass);
 
