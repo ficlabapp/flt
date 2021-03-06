@@ -63,7 +63,7 @@ export class MapPoint {
                 matchLine = this.at(match.index + skew),
                 matchReplace = replace,
                 onset = match.index + skew - matchLine.offset,
-                remainder = matchLine.line.length - matchLength - onset;
+                remainder = matchLine.line.length - matchReplace.length - onset;
 
             // build replacement string when capturing groups are used
             if (match.length > 1) {
