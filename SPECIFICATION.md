@@ -75,6 +75,12 @@ other purposes specific to that particular type.
 | 0x0400 | MONO      | Monospaced text     |
 | 0x0800 |           | RESERVED            |
 
+### SUPERTEXT & SUBTEXT
+
+These flags are mutually exclusive, and SHOULD NOT be enabled at the same time.
+Implementations of this format MUST gracefully handle cases where both are
+enabled. The display behavior where both are enabled is undefined.
+
 ### RESET
 
 Resets any persistent state (e.g. links, tooltips) that may otherwise apply to
