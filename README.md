@@ -9,8 +9,10 @@ detailed description of the format specification may be found in
 
 ## Plugins
 
-| Package                  | Description    |
-| :----------------------- | :------------- |
-| [@ficlabapp/flt-html][2] | Render to HTML |
+| Package                  | Description        |
+| :----------------------- | :----------------- |
+| [@ficlabapp/flt-html][2] | Render to HTML     |
+| [@ficlabapp/flt-md][3]   | Render to markdown |
 
 [2]: https://github.com/ficlabapp/flt-html
+[3]: https://github.com/ficlabapp/flt-md
