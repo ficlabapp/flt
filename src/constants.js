@@ -10,11 +10,6 @@ const values = {
     DEFAULT_VERSION: 1n, // default format version for new documents
     DEFAULT_FEATURES: 0x0001n, // default document features
     DEFAULT_GENERATOR: "https://github.com/ficlabapp/flt", // document generator
-    // default HTML source
-    DEFAULT_HTML:
-        "<!DOCTYPE html><html><head><style>.underline {text-decoration: underline;} .m" +
-        "ono {font-family: monospace;} .align-center {text-align: center;} .align-righ" +
-        "t {text-align: right;} .align-left {text-align: left;} </style></head></html>",
 
     // formatting
     MAX_LINE_LENGTH: 78n, // max number of characters in a line, excluding the final newline
