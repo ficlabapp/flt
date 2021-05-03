@@ -147,9 +147,9 @@ will also implicitly open a new paragraph and set the destination to `BODY`.
 #### Flags
 | Number | Type         | Description                             |
 | -----: | ------------ | --------------------------------------- |
-| 0x0010 | ALIGN_LEFT   | Section text should be centred          |
-| 0x0020 | ALIGN_CENTER | Section text should be right-aligned    |
-| 0x0030 | ALIGN_RIGHT  | Section text should be fully justified  |
+| 0x0010 | ALIGN_LEFT   | Section text should be left-aligned     |
+| 0x0020 | ALIGN_CENTER | Section text should be centred          |
+| 0x0030 | ALIGN_RIGHT  | Section text should be right-aligned    |
 | 0x0040 | VISUAL_BREAK | Visual separator after previous section |
 
 ### PARAGRAPH
@@ -159,9 +159,9 @@ Begin a new paragraph.
 #### Flags
 | Number | Type         | Description                             |
 | -----: | ------------ | --------------------------------------- |
-| 0x0010 | ALIGN_LEFT   | Section text should be centred          |
-| 0x0020 | ALIGN_CENTER | Section text should be right-aligned    |
-| 0x0030 | ALIGN_RIGHT  | Section text should be fully justified  |
+| 0x0010 | ALIGN_LEFT   | Section text should be left-aligned     |
+| 0x0020 | ALIGN_CENTER | Section text should be centred          |
+| 0x0030 | ALIGN_RIGHT  | Section text should be right-aligned    |
 
 ### HINT
 
