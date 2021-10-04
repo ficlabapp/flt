@@ -53,11 +53,12 @@ export class MapPoint {
     replace(search, replace) {
         let matches = null,
             skew = 0;
-        if (search.global) matches = this.text.matchAll(search);
+        if (search.global) matches = [...this.text.matchAll(search)];
         else matches = [this.text.match(search)];
 
-        for (let match of matches) {
-            if (!match) break;
+        for (let i = 0; i < matches.length; i++) {
+            let match = matches[i];
+            if (!match) continue;
 
             let matchLength = match[0].length,
                 matchLine = this.at(match.index + skew),
