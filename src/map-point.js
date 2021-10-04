@@ -64,7 +64,6 @@ export class MapPoint {
                 matchLine = this.at(match.index + skew),
                 matchReplace = replace,
                 matchOffsetWithinLine = match.index + skew - matchLine.offset;
-                remainder = matchLine.line.length - matchReplace.length - matchOffsetWithinLine;
 
             // build replacement string when capturing groups are used
             if (match.length > 1) {
@@ -74,12 +73,17 @@ export class MapPoint {
                 }
             }
 
-            // update skew so we can use the original match indexes for future matches
+            // set skew & remainder so we can use the original match indexes for future matches
             skew += matchReplace.length - matchLength;
+            let remainder = matchLine.line.length - matchLength - matchOffsetWithinLine;
 
             // fast path when only one TextLine is involved
             if (remainder >= 0) {
-                matchLine.line.text = matchLine.line.text.replace(search, replace);
+                matchLine.line.text =
+                    matchLine.line.text.slice(0, matchOffsetWithinLine) +
+                    matchReplace +
+                    matchLine.line.text.slice(matchOffsetWithinLine + match.length);
+
                 continue;
             }
 
@@ -87,7 +91,7 @@ export class MapPoint {
             // NOTE THAT CAPTURING GROUPS ARE NOT KEPT WITHIN THEIR LINES, so if
             // using captured text as part of the replacement, bear in mind that it
             // will end up transposed into the first line. Things like quote replacement
-            // etc. must be done some other way if needing to e.g. preserve formatting.
+            // etc. must be done some other way if needing to preserve line boundaries.
             matchLine.line.text =
                 matchLine.line.text.slice(0, matchOffsetWithinLine) + matchReplace;
             for (
