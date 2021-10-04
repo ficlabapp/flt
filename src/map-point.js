@@ -63,8 +63,8 @@ export class MapPoint {
             let matchLength = match[0].length,
                 matchLine = this.at(match.index + skew),
                 matchReplace = replace,
-                onset = match.index + skew - matchLine.offset,
-                remainder = matchLine.line.length - matchReplace.length - onset;
+                matchOffsetWithinLine = match.index + skew - matchLine.offset;
+                remainder = matchLine.line.length - matchReplace.length - matchOffsetWithinLine;
 
             // build replacement string when capturing groups are used
             if (match.length > 1) {
@@ -88,7 +88,8 @@ export class MapPoint {
             // using captured text as part of the replacement, bear in mind that it
             // will end up transposed into the first line. Things like quote replacement
             // etc. must be done some other way if needing to e.g. preserve formatting.
-            matchLine.line.text = matchLine.line.text.slice(0, onset) + matchReplace;
+            matchLine.line.text =
+                matchLine.line.text.slice(0, matchOffsetWithinLine) + matchReplace;
             for (
                 let next = this.at(matchLine.offset + matchLine.line.length);
                 remainder < 0 && next;
