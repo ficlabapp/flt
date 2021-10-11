@@ -69,7 +69,7 @@ export class MapPoint {
             if (match.length > 1) {
                 for (let i = 1; i < match.length; i++) {
                     let r = new RegExp(`\\$${i}`, "gu");
-                    matchReplace = matchReplace.replace(r, match[i]);
+                    matchReplace = matchReplace.replace(r, match[i] || "");
                 }
             }
 
