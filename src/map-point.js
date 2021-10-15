@@ -130,7 +130,7 @@ export class MapPoint {
     }
 
     /**
-     * Get the text lines associated with this poine
+     * Get the text lines associated with this point
      *
      * @since 1.0.0
      *
