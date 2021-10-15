@@ -1,6 +1,6 @@
 {
     "name": "@ficlabapp/flt",
-    "version": "1.2.10",
+    "version": "1.2.11",
     "description": "JS implementation of text/vnd.ficlab.flt",
     "repository": "github:ficlabapp/flt",
     "license": "ISC",

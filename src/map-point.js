@@ -82,7 +82,7 @@ export class MapPoint {
                 matchLine.line.text =
                     matchLine.line.text.slice(0, matchOffsetWithinLine) +
                     matchReplace +
-                    matchLine.line.text.slice(matchOffsetWithinLine + match.length);
+                    matchLine.line.text.slice(matchOffsetWithinLine + matchLength);
 
                 continue;
             }
