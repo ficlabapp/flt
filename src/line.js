@@ -95,19 +95,20 @@ export class TextLine extends Line {
     constructor(lineNo, bitfield, text) {
         super(lineNo, bitfield);
         this.type = Constants.L_TEXT;
-        let flags = {
-            italic: Constants.L_ITALIC,
-            bold: Constants.L_BOLD,
-            underline: Constants.L_UNDERLINE,
-            strikeout: Constants.L_STRIKEOUT,
-            supertext: Constants.L_SUPERTEXT,
-            subtext: Constants.L_SUBTEXT,
-            mono: Constants.L_MONO,
-        };
+        let text = "",
+            flags = {
+                italic: Constants.L_ITALIC,
+                bold: Constants.L_BOLD,
+                underline: Constants.L_UNDERLINE,
+                strikeout: Constants.L_STRIKEOUT,
+                supertext: Constants.L_SUPERTEXT,
+                subtext: Constants.L_SUBTEXT,
+                mono: Constants.L_MONO,
+            };
         for (let i in flags) this.defineProperty(i, Helpers.ffz(~flags[i]));
 
         Object.defineProperties(this, {
-            text: { enumerable: true, value: text, writable: true },
+            text: { enumerable: true, get: () => text, set: (s) => (text = `${s}`) },
             length: { enumerable: true, get: () => this.text.length },
         });
     }
