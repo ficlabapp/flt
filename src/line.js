@@ -95,8 +95,7 @@ export class TextLine extends Line {
     constructor(lineNo, bitfield, text) {
         super(lineNo, bitfield);
         this.type = Constants.L_TEXT;
-        let text = "",
-            flags = {
+        let flags = {
                 italic: Constants.L_ITALIC,
                 bold: Constants.L_BOLD,
                 underline: Constants.L_UNDERLINE,
@@ -111,6 +110,8 @@ export class TextLine extends Line {
             text: { enumerable: true, get: () => text, set: (s) => (text = `${s}`) },
             length: { enumerable: true, get: () => this.text.length },
         });
+
+        this.text = text; // coerce type
     }
 
     /**
