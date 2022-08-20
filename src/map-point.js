@@ -130,6 +130,27 @@ export class MapPoint {
     }
 
     /**
+     * Get or set the character at the specified offset
+     *
+     * @since 1.3.0
+     *
+     * @param int  offset      Offset into text
+     * @param char replacement Character to replace with
+     * @return char The character at the given offset
+     */
+    charAt(offset, replacement = null) {
+        let pos = this.at(offset);
+        if (!pos) return null;
+        let {offset: lineOffset, line} = pos,
+            intraLineOffset = offset - lineOffset;
+        if (typeof replacement === 'string') {
+            if (replacement.length !== 1) throw new Error('Replacement must be a single character');
+            line.text = `${line.text.slice(0, intraLineOffset)}${replacement}${line.text.slice(intraLineOffset + 1)}`;
+        }
+        return line.text.charAt(intraLineOffset);
+    }
+
+    /**
      * Get the text lines associated with this point
      *
      * @since 1.0.0
