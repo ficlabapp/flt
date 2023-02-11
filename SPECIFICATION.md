@@ -27,6 +27,9 @@ All textual content MUST use UTF-8 encoding.
 
 All numeric and bitmask content MUST be encoded as hexadecimal (base-16).
 
+Any literal newline within a line's content MUST be escaped as `\n`. Any
+literal backslash (`\`) in a line's content MUST be escaped as `\\`.
+
 ## Line-Based
 
 The FLT document is comprised of one or more lines. Each line MUST be no more
