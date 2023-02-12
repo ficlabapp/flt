@@ -4,7 +4,7 @@ text/vnd.ficlab.flt
 This format is a line-based rich text format intended for use with FicLab ebook
 software.
 
-The current version of the format specification is `1`.
+The current version of the format specification is `2`.
 
 ## Conventions & Terminology
 
@@ -77,6 +77,7 @@ other purposes specific to that particular type.
 | 0x0200 | SUBTEXT   | Subtext             |
 | 0x0400 | MONO      | Monospaced text     |
 | 0x0800 |           | RESERVED            |
+| 0x1000 | BUFFER    | Send to buffer      |
 
 ### SUPERTEXT & SUBTEXT
 
@@ -89,6 +90,16 @@ enabled. The display behavior where both are enabled is undefined.
 Resets any persistent state (e.g. links, tooltips) that may otherwise apply to
 this line. This flag MUST be applied first, before any other flags are
 processed.
+
+### BUFFER
+
+Directly render flagged lines to the buffer, rather than to the output
+document.
+
+If the `BUFFER` flag is set on any logical container, then the entire contents
+of that container MUST be rendered to the buffer, as if the `BUFFER` flag was
+also set on every subordinate line, even if those lines do not explicitly set
+it. For clarity, this includes `PARAGRAPH`, `TABLE`, and `CONTAINER` types.
 
 ## Metadata
 
@@ -135,18 +146,20 @@ the data for that term.
 
 Typed data lines MUST consist of a type number, then type-dependent content.
 
-| Number | Type        | Description                                 |
-| -----: | ----------- | ------------------------------------------- |
-|      0 | NOOP        | Null operation                              |
-|      1 | SECTION     | New section                                 |
-|      2 | PARAGRAPH   | New paragraph                               |
-|      3 | HINT        | Hint / tooltip for subsequent content       |
-|      4 | LINK        | URL to which subsequent content should link |
-|      5 | ANCHOR      | Named anchor for internal linking           |
-|      6 | BLOB        | Base64-encoded binary data                  |
-|      7 | IMAGE       | Image                                       |
-|      8 | TABLE       | New table                                   |
-|      9 | DESTINATION | Content destination                         |
+| Number | Type        | Description                                                  |
+| -----: | ----------- | ------------------------------------------------------------ |
+|      0 | NOOP        | Null operation                                               |
+|      1 | SECTION     | New section                                                  |
+|      2 | PARAGRAPH   | New paragraph                                                |
+|      3 | HINT        | Hint / tooltip for subsequent content                        |
+|      4 | LINK        | URL to which subsequent content should link                  |
+|      5 | ANCHOR      | Named anchor for internal linking                            |
+|      6 | BLOB        | Base64-encoded binary data                                   |
+|      7 | IMAGE       | Image                                                        |
+|      8 | TABLE       | New table                                                    |
+|      9 | DESTINATION | Content destination                                          |
+|     10 | CONTAINER   | Set nestable container context (e.g. blockquote, lists etc.) |
+|     11 | BUFFER      | Flush & render the contents of the buffer                    |
 
 ### SECTION
 
@@ -230,10 +243,39 @@ If the destination is a footnote, a new footnote is created every time this
 line is present.
 
 If the destination is a heading, a new section is created every time this line
-is present, and the destination is then set to `D_BODY`.
+is present, and the destination is then set to `BODY`.
+
+The `BUFFER` flag SHOULD NOT be set on any destination line. If an
+implementation encounters that flag on such a line, it MUST be ignored.
 
 #### Flags
 
 | Number | Name   | Description                        |
 | -----: | -------| ---------------------------------- |
 | 0x0100 | HEADER | Cell destination is a table header |
+
+### CONTAINER
+
+Adjust container context. The container action is set using bits 5-8 of the
+line flags. The container type is set using bits 9-12 of the line flags.
+
+If a `NEXT` action is encountered within a container of type `BLOCKQUOTE`, then
+that container should be closed and a new container of the same type opened.
+
+| Number | Action   | Description                                                |
+| -----: | -------- | ---------------------------------------------------------- |
+| 0x0000 | RESET    | Close all containers & return to the top-level document    |
+| 0x0010 | NEXT     | Advance within the current container (e.g. next list item) |
+| 0x0020 | OPEN     | Open a new container                                       |
+| 0x0030 | CLOSE    | Close the current container                                |
+
+| Number | Type       | Description                                      |
+| -----: | ---------- | ------------------------------------------------ |
+| 0x0000 | BLOCKQUOTE | A block quote containing arbitrary other content |
+| 0x0100 | LIST       | A list of items                                  |
+| 0x0200 | NUMBERED   | A numbered list of items                         |
+
+### BUFFER
+
+Append the entire rendered contents of the buffer to the current destination,
+then clear the buffer.
