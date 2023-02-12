@@ -130,9 +130,10 @@ flags MUST be set to 0x0003.
 
 Contains a bitmask that declares all features used in the document.
 
-|  Value | Feature | Description          |
-| -----: | ------- | -------------------- |
-| 0x0001 | DCMETA  | Dublin core metadata |
+|  Value | Feature    | Description                         |
+| -----: | ---------- | ----------------------------------- |
+| 0x0001 | DCMETA     | Dublin core metadata                |
+| 0x0002 | CONTAINERS | Nestable containers & render buffer |
 
 #### DCMETA
 
